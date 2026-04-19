@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUXE — Premium Collection</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="web site.css">
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="logo-text">LUXE</div>
+  <div class="bar"><div class="bar-fill"></div></div>
+</div>
+
+<!-- TOP BAR -->
+<div class="top-bar">✨ Free shipping on orders above <span>₹2,000</span> &nbsp;|&nbsp; Use code <span>LUXE10</span> for 10% off</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-main">
+    <a class="brand">LU<span>X</span>E</a>
+    <div class="search-wrap">
+      <input type="text" id="searchInput" placeholder="Search products, categories…" oninput="searchProducts()">
+      <span class="s-icon">🔍</span>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="openWishlist()" title="Wishlist">
+        🤍
+        <span class="badge" id="wishBadge" style="display:none">0</span>
+      </button>
+      <button class="icon-btn" onclick="toggleCart()" title="Cart">
+        🛍️
+        <span class="badge" id="cartCount">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- NAV CATEGORIES -->
+  <div class="nav-bar">
+    <div class="nav-inner" id="navInner"></div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-tag">New Collection 2026</div>
+    <h1>Dress the Life<br>You <em>Deserve</em></h1>
+    <p>Curated luxury essentials from around the world, delivered to your door.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="filterProducts('all')">Shop Now</button>
+      <button class="btn-outline" onclick="filterProducts('Fashion')">New Arrivals</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Products</div></div>
+    <div class="stat"><div class="stat-num">50K+</div><div class="stat-label">Customers</div></div>
+    <div class="stat"><div class="stat-num">4.9★</div><div class="stat-label">Rating</div></div>
+  </div>
+</section>
+
+<!-- BANNER CARDS -->
+<div class="banner-wrap">
+  <div class="banner" onclick="filterProducts('Fashion')">
+    <div class="banner-content">
+      <div class="banner-label">This Season</div>
+      <h3>Fashion &<br>Apparel</h3>
+      <p>Explore the new drops</p>
+    </div>
+  </div>
+  <div class="banner" onclick="filterProducts('Watches')">
+    <div class="banner-content">
+      <div class="banner-label">Timeless</div>
+      <h3>Luxury Watches</h3>
+    </div>
+  </div>
+  <div class="banner" onclick="filterProducts('Electronics')">
+    <div class="banner-content">
+      <div class="banner-label">Tech</div>
+      <h3>Electronics</h3>
+    </div>
+  </div>
+</div>
+
+<div class="section-header">
+  <div>
+    <div class="section-title">Our <span>Collection</span></div>
+    <div class="section-sub" id="sectionSub">Showing all products</div>
+  </div>
+  <button class="view-all" onclick="filterProducts('all')">View All</button>
+</div>
+
+<div class="filters">
+  <select class="sort-select" id="sortSelect" onchange="applySortAndFilter()">
+    <option value="default">Sort: Default</option>
+    <option value="price-asc">Price: Low to High</option>
+    <option value="price-desc">Price: High to Low</option>
+    <option value="name-asc">Name: A–Z</option>
+    <option value="rating-desc">Top Rated</option>
+  </select>
+  <div class="price-filter-wrap">
+    <span>Max: ₹<span id="priceLabel">50000</span></span>
+    <input type="range" class="range-input" id="priceRange" min="400" max="50000" value="50000" step="100" oninput="applySortAndFilter()">
+  </div>
+  <span class="filter-tag" id="tag-sale" onclick="toggleTag('sale')">On Sale</span>
+  <span class="filter-tag" id="tag-new" onclick="toggleTag('new')">New In</span>
+  <button class="view-all" style="margin-left:auto;font-size:12px;padding:6px 14px" onclick="clearAllFilters()">Clear Filters</button>
+  <span class="result-count" id="resultCount">16 products</span>
+</div>
+
+<div class="grid-wrap">
+  <div class="product-grid" id="productGrid"></div>
+  <div class="not-found" id="notFound">
+    <div class="not-found-icon">🔍</div>
+    <h2>No Products Found</h2>
+    <p>We couldn't find anything matching "<span id="searchedWord"></span>"</p>
+    <p style="margin-top:8px;color:#aaa;">Try a different keyword or browse all categories.</p>
+    <button class="btn-gold" style="margin-top:24px" onclick="filterProducts('all')">Browse All</button>
+  </div>
+</div>
+
+<div class="features">
+  <div class="features-inner">
+    <div class="feature"><div class="feature-icon">🚚</div><h4>Free Delivery</h4><p>On orders above ₹2,000 across India</p></div>
+    <div class="feature"><div class="feature-icon">🔄</div><h4>Easy Returns</h4><p>30-day hassle-free return policy</p></div>
+    <div class="feature"><div class="feature-icon">🔒</div><h4>Secure Payments</h4><p>UPI, cards, wallets all protected</p></div>
+    <div class="feature"><div class="feature-icon">💎</div><h4>Genuine Products</h4><p>100% authentic luxury goods</p></div>
+    <div class="feature"><div class="feature-icon">🎁</div><h4>Gift Wrapping</h4><p>Premium packaging on request</p></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <div class="logo">LU<span>X</span>E</div>
+      <p>Your destination for curated luxury — fashion, tech, lifestyle, and more, all in one place.</p>
+      <div class="footer-social">
+        <button class="social-btn">📸</button>
+        <button class="social-btn">🐦</button>
+        <button class="social-btn">▶️</button>
+        <button class="social-btn">💼</button>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a onclick="filterProducts('Fashion')">Fashion</a>
+      <a onclick="filterProducts('Electronics')">Electronics</a>
+      <a onclick="filterProducts('Watches')">Watches</a>
+      <a onclick="filterProducts('Sports')">Sports</a>
+      <a onclick="filterProducts('Furniture')">Furniture</a>
+    </div>
+    <div class="footer-col">
+      <h4>Help</h4>
+      <a>Track Order</a>
+      <a>Returns</a>
+      <a>Size Guide</a>
+      <a>FAQs</a>
+      <a>Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a>About LUXE</a>
+      <a>Careers</a>
+      <a>Press</a>
+      <a>Privacy Policy</a>
+      <a>Terms of Use</a>
+    </div>
+  </div>
+  <div class="footer-bottom">© 2026 LUXE Store — All rights reserved. Made with ❤️ in India.</div>
+</footer>
+
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<!-- CART PANEL -->
+<div class="cart-panel" id="cartPanel">
+  <div class="cart-header">
+    <h2>Your Cart 🛍️</h2>
+    <button class="close-btn" onclick="toggleCart()">✕</button>
+  </div>
+  <div class="cart-items-list" id="cartItemsList"></div>
+  <div class="cart-footer" id="cartFooter"></div>
+</div>
+
+<!-- WISHLIST PANEL -->
+<div class="cart-overlay" id="wishOverlay" onclick="closeWishlist()"></div>
+<div class="wishlist-panel" id="wishlistPanel">
+  <div class="cart-header">
+    <h2>Wishlist 🤍</h2>
+    <button class="close-btn" onclick="closeWishlist()">✕</button>
+  </div>
+  <div class="wishlist-items" id="wishlistItems"></div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="productModal">
+    <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    <div class="modal-img"><img id="modalImg" src="" alt=""></div>
+    <div class="modal-info">
+      <div class="modal-cat" id="modalCat"></div>
+      <div class="modal-name" id="modalName"></div>
+      <div class="modal-rating" id="modalRating"></div>
+      <div class="modal-price" id="modalPrice"></div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-actions">
+        <button class="modal-add" id="modalAddBtn">Add to Cart</button>
+        <button class="modal-wish" id="modalWishBtn">🤍</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
